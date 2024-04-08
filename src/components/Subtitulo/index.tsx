@@ -1,7 +1,12 @@
 import React from 'react'
+import { StyledSubtitulo } from './styles'
 
-const Subtitulo = () => {
-  return <div>Subtitulo</div>
+type Props = {
+  text: string
+}
+
+const Subtitulo = ({text}: Props) => {
+  return <StyledSubtitulo>{text}</StyledSubtitulo>
 }
 
 export default Subtitulo
