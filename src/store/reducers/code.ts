@@ -1,7 +1,19 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import firebase from 'firebase/app';
-import { app } from "../../services/firebase";
 import 'firebase/auth';
+
+// Initialize Firebase
+const firebaseConfig = {
+  apiKey: 'YOUR_API_KEY',
+  authDomain: 'YOUR_AUTH_DOMAIN',
+  databaseURL: 'YOUR_DATABASE_URL',
+  projectId: 'YOUR_PROJECT_ID',
+  storageBucket: 'YOUR_STORAGE_BUCKET',
+  messagingSenderId: 'YOUR_MESSAGING_SENDER_ID',
+  appId: 'YOUR_APP_ID',
+  measurementId: 'YOUR_MEASUREMENT_ID'
+};
+firebase.initializeApp(firebaseConfig);
 
 // Define a user type that includes the Firebase user object
 type User = {
@@ -18,47 +30,24 @@ interface AuthState {
   error: string | null;
 }
 
-const initialState: AuthState = {
-  user: null,
-  loading: false,
-  error: null,
-};
-
-// Define the thunks for logging in and out
-export const loginAsync = createAsyncThunk('auth/login', async (credentials: { email: string; password: string }) => {
-  try {
-    // Sign in with Firebase
-    const user = await firebase.auth().signInWithEmailAndPassword(credentials.email, credentials.password);
-
-    // Return the user
-    return user.user;
-  } catch (error) {
-    throw error;
-  }
-});
-
-export const logoutAsync = createAsyncThunk('auth/logout', async () => {
-  try {
-    // Sign out with Firebase
-    await firebase.auth().signOut();
-  } catch (error) {
-    throw error;
-  }
-});
-
+// Define the actions that can be dispatched to the store
 const authSlice = createSlice({
-  name: "auth",
-  initialState,
+  name: 'auth',
+  initialState: {
+    user: null,
+    loading: false,
+    error: null,
+  } as AuthState,
   reducers: {
-    // Atualizando o estado do usuário
+    // Update the user state
     setUser: (state, action: PayloadAction<User | null>) => {
       state.user = action.payload;
     },
-    // Estado de 'loading'
+    // Set the loading state
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
     },
-    // Estado de erro
+    // Set the error state
     setError: (state, action: PayloadAction<string | null>) => {
       state.error = action.payload;
     },
@@ -96,6 +85,28 @@ const authSlice = createSlice({
   },
 });
 
-export const { setUser, setLoading, setError } = loginSlice.actions;
+// Define the thunks for logging in and out
+export const loginAsync = createAsyncThunk('auth/login', async (credentials: { email: string; password: string }) => {
+  try {
+    // Sign in with Firebase
+    const user = await firebase.auth().signInWithEmailAndPassword(credentials.email, credentials.password);
 
-export default loginSlice.reducer;
+    // Return the user
+    return user.user;
+  } catch (error) {
+    throw error;
+  }
+});
+
+export const logoutAsync = createAsyncThunk('auth/logout', async () => {
+  try {
+    // Sign out with Firebase
+    await firebase.auth().signOut();
+  } catch (error) {
+    throw error;
+  }
+});
+
+// Export the actions and reducer
+export const { setUser, setLoading, setError } = authSlice.actions;
+export default authSlice.reducer;
