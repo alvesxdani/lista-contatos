@@ -9,10 +9,9 @@ type InputProps = InputHTMLAttributes<{
   onClick?: (e: React.MouseEvent) => void
 }>
 
-const Input = ({ name, id, type, placeholder, label }: InputProps) => {
+const Input = ({ name, id, type, placeholder }: InputProps) => {
   return (
     <StyledInput>
-      <label htmlFor={name}>{label}</label>
       <input type={type} id={id} name={name} placeholder={placeholder} />
     </StyledInput>
   )
