@@ -7,7 +7,8 @@ const FormsLogin = () => {
   return (
     <StyledFormsLogin>
         <Subtitulo text='Faça login'/>
-        <Input type='email' label='E-mail' id='email' name='email' />
+        <Input type='email' id='email' name='email' placeholder='E-mail' />
+        <Input type='password' id='password' name='password' placeholder='Senha' />
     </StyledFormsLogin>
   )
 }
