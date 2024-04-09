@@ -4,9 +4,10 @@ import authReducer from './reducers/login'
 
 const store = configureStore({
   reducer: {
-    authSignIn: authReducer,
+    auth: authReducer,
   }
 })
 
-export default store
 export type RootReducer = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
+export default store
