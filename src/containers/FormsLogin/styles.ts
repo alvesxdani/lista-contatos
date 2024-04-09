@@ -8,8 +8,8 @@ align-items: center;
 gap: 1rem;
 border: 1px solid #eee;
 border-radius: 10px;
-padding: 1.5rem;
-width: 30%;
+padding: 1rem;
+width: 40%;
     h2 {
         margin-bottom: 2rem;
     }
