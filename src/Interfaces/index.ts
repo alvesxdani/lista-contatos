@@ -6,6 +6,11 @@ export interface IUser {
   photoURL: string | null
 }
 
+export interface AuthState {
+  user: IUser | null;
+  error: string | null;
+}
+
 export interface IAuthForm {
   email: string
   password: string
