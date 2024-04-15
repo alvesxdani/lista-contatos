@@ -3,7 +3,6 @@ import { AuthState, IUser } from "../../Interfaces";
 
 const initialState: AuthState = {
   user: null,
-  error: null,
 };
 
 
@@ -18,12 +17,8 @@ export const authSlice = createSlice({
     logout: (state) => {
       state.user = null;
     },
-    // Estado de erro
-    setError: (state, action: PayloadAction<string | null>) => {
-      state.error = action.payload;
-    },
   },
 });
 
-export const { login, logout, setError } = authSlice.actions;
+export const { login, logout } = authSlice.actions;
 export default authSlice.reducer;

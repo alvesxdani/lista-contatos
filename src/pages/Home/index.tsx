@@ -1,14 +1,10 @@
 import React from 'react'
-import Logo from '../../components/Logo'
-import { StyledContainer } from './styles'
-import FormsLogin from '../../containers/FormsLogin'
+import { useAppSelector } from '../../hooks/storeHook'
 
 const Home = () => {
+  const {user} = useAppSelector((state) => state.auth)
   return (
-    <StyledContainer>
-      <Logo />
-      <FormsLogin />
-    </StyledContainer>
+    <p>Bem-vindo, {user?.email}</p>
   )
 }
 

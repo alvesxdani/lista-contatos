@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ErrorInfo, useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -10,11 +10,25 @@ import Button from "../../components/Botao";
 import { AuthState, IAuthForm } from "../../Interfaces";
 import { authFormSchema } from "../../models/Form";
 import { useAppDispatch, useAppSelector } from "../../hooks/storeHook";
-import { login, setError } from "../../store/reducers/login";
+import { login } from "../../store/reducers/login";
+import { useNavigate } from "react-router-dom";
 import { RootReducer } from "../../store";
+import { useSelector } from "react-redux";
 
 const FormsLogin = () => {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const errorMsg = "Login inválido";
+
+  const { user } = useAppSelector((state: RootReducer) => state.auth);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (Boolean(user)) {
+      navigate("/index");
+    }
+  }, [user, navigate]);
 
   const {
     register,
@@ -25,27 +39,29 @@ const FormsLogin = () => {
     resolver: yupResolver(authFormSchema),
   });
 
-  const dispatch = useAppDispatch();
-
   const handleFormSubmit = async (data: IAuthForm) => {
     const { email, password } = data;
-
     try {
       setLoading(true);
-      const { user } = await signInWithEmailAndPassword(auth, email, password);
-      if (user && user.email)
+      const { user: userLogin } = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      if (userLogin && userLogin.email)
         dispatch(
           login({
-            id: user.uid,
-            email: user.email,
-            displayName: user.displayName,
-            photoURL: user.photoURL || null,
-          }),
+            id: userLogin.uid,
+            email: userLogin.email,
+            displayName: userLogin.displayName,
+            photoURL: userLogin.photoURL || null,
+          })
         );
-      console.log(user);
-    } catch (error) {
-      dispatch(setError(`${error}`));
-      console.log(error);
+      console.log(userLogin);
+      // console.log(user)
+    } catch (e: any) {
+      setError(errorMsg);
+      setLoading(false);
     } finally {
       reset({
         email: "",
@@ -53,7 +69,6 @@ const FormsLogin = () => {
       });
       setLoading(false);
     }
-
   };
   return (
     <StyledFormsLogin onSubmit={handleSubmit(handleFormSubmit)}>
@@ -77,6 +92,7 @@ const FormsLogin = () => {
       <Button color="red" type="submit" disabled={loading}>
         Entrar
       </Button>
+      {error && <p>{error}</p>}
     </StyledFormsLogin>
   );
 };

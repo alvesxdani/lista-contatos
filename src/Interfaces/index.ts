@@ -8,7 +8,6 @@ export interface IUser {
 
 export interface AuthState {
   user: IUser | null;
-  error: string | null;
 }
 
 export interface IAuthForm {
