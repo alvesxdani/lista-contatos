@@ -8,8 +8,8 @@ const FormsLogin = () => {
   return (
     <StyledFormsLogin>
         <Subtitulo text='Faça login'/>
-        <Input type='email' id='email' name='email' placeholder='E-mail' />
-        <Input type='password' id='password' name='password' placeholder='Senha' />
+        <Input type='email' id='email' name='email' placeholder='E-mail' label='E-mail:' />
+        <Input type='password' id='password' name='password' placeholder='Senha' label='Senha:' />
         <Button color='red'>Entrar</Button>
     </StyledFormsLogin>
   )
