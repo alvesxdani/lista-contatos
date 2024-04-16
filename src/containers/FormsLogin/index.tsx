@@ -1,34 +1,34 @@
-import React, { ErrorInfo, useEffect, useState } from "react";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../services/firebase";
-import { StyledFormsLogin } from "./styles";
-import Subtitulo from "../../components/Subtitulo";
-import Input from "../../components/Input";
-import Button from "../../components/Botao";
-import { AuthState, IAuthForm } from "../../Interfaces";
-import { authFormSchema } from "../../models/Form";
-import { useAppDispatch, useAppSelector } from "../../hooks/storeHook";
-import { login } from "../../store/reducers/login";
-import { useNavigate } from "react-router-dom";
-import { RootReducer } from "../../store";
-import { useSelector } from "react-redux";
+import React, { ErrorInfo, SetStateAction, useEffect, useState } from 'react'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useForm } from 'react-hook-form'
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '../../services/firebase'
+import { StyledFormsLogin } from './styles'
+import Subtitulo from '../../components/Subtitulo'
+import Input from '../../components/Input'
+import Button from '../../components/Botao'
+import { AuthState, IAuthForm } from '../../Interfaces'
+import { authFormSchema } from '../../models/Form'
+import { useAppDispatch, useAppSelector } from '../../hooks/storeHook'
+import { isLogged, login } from '../../store/reducers/login'
+import { useNavigate } from 'react-router-dom'
+import { RootReducer } from '../../store'
 
 const FormsLogin = () => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const errorMsg = "Login inválido";
+  const [loading, setLoading] = useState(false)
+  const [loggedIn, setLoggedIn] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const { user } = useAppSelector((state: RootReducer) => state.auth)
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
-  const { user } = useAppSelector((state: RootReducer) => state.auth);
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const errorMsg = 'Login inválido'
 
   useEffect(() => {
     if (Boolean(user)) {
-      navigate("/index");
+      navigate('/index')
     }
-  }, [user, navigate]);
+  }, [user, navigate])
 
   const {
     register,
@@ -37,17 +37,17 @@ const FormsLogin = () => {
     reset,
   } = useForm<IAuthForm>({
     resolver: yupResolver(authFormSchema),
-  });
+  })
 
   const handleFormSubmit = async (data: IAuthForm) => {
-    const { email, password } = data;
+    const { email, password } = data
     try {
-      setLoading(true);
+      setLoading(true)
       const { user: userLogin } = await signInWithEmailAndPassword(
         auth,
         email,
-        password
-      );
+        password,
+      )
       if (userLogin && userLogin.email)
         dispatch(
           login({
@@ -55,22 +55,23 @@ const FormsLogin = () => {
             email: userLogin.email,
             displayName: userLogin.displayName,
             photoURL: userLogin.photoURL || null,
-          })
-        );
-      console.log(userLogin);
+          }),
+        )
+      console.log(userLogin)
       // console.log(user)
     } catch (e: any) {
-      setError(errorMsg);
-      setLoading(false);
+      setError(errorMsg)
+      setLoading(false)
     } finally {
       reset({
-        email: "",
-        password: "",
-      });
-      setLoading(false);
+        email: '',
+        password: '',
+      })
+      setLoading(false)
     }
-  };
-  return (
+  }
+
+return (
     <StyledFormsLogin onSubmit={handleSubmit(handleFormSubmit)}>
       <Subtitulo text="Faça login" />
       <Input
@@ -78,7 +79,7 @@ const FormsLogin = () => {
         id="email"
         placeholder="E-mail"
         label="E-mail:"
-        {...register("email")}
+        {...register('email')}
       />
       {errors.email && <p>{errors.email.message}</p>}
       <Input
@@ -86,7 +87,7 @@ const FormsLogin = () => {
         id="password"
         placeholder="Senha"
         label="Senha:"
-        {...register("password")}
+        {...register('password')}
       />
       {errors.password && <p>{errors.password.message}</p>}
       <Button color="red" type="submit" disabled={loading}>
@@ -94,7 +95,7 @@ const FormsLogin = () => {
       </Button>
       {error && <p>{error}</p>}
     </StyledFormsLogin>
-  );
-};
+  )
+}
 
-export default FormsLogin;
+export default FormsLogin
