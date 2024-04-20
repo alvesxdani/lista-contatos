@@ -1,5 +1,5 @@
 import { checkLoginStatus } from '../store/reducers/login'
-import { useAppDispatch, useAppSelector } from './storeHook'
+import { useAppDispatch, useAppSelector } from './useApp'
 
 export const useAuth = () => {
   const { user } = useAppSelector((state) => state.auth)
