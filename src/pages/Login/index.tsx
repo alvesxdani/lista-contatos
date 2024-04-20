@@ -11,7 +11,7 @@ const Login = () => {
 
   useEffect(() => {
     getAuth()
-    if (user) navigate('/index')
+    if (user) navigate('/')
   }, [])
 
     return (
