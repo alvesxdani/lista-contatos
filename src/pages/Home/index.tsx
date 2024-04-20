@@ -1,34 +1,32 @@
 import React, { useEffect, useState } from 'react'
-import { useAppDispatch, useAppSelector } from '../../hooks/storeHook'
+import { useAppDispatch, useAppSelector } from '../../hooks/useApp'
 import { checkLoginStatus, logout } from '../../store/reducers/login'
-import { useNavigate } from 'react-router-dom'
-import Button from '../../components/Botao'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
+import Header from '../../components/Header'
+import BarraLateral from '../../containers/BarraLateral'
+import { Container } from '../../styles'
 
 const Home = () => {
   // const { user } = useAppSelector((state) => state.auth)
-  const {user, getAuth} = useAuth()
+  const { user, getAuth } = useAuth()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
   useEffect(() => {
-    console.log(user)
     getAuth()
-    if(!user) navigate('/')
+    if (!user) navigate('/login')
   }, [])
 
-  function handleLogout() {
-    dispatch(logout())
-    navigate('/')
-  }
-
-  if (user)
-    return (
-      <>
-        <p>Bem-vindo, {user?.email}</p>
-        <Button color='black' onClick={handleLogout}>Logout</Button>
-      </>
-    )
+  return (
+    <>
+      <Header />
+      <Container>
+        <BarraLateral />
+        <Outlet />
+      </Container>
+    </>
+  )
 }
 
 export default Home
