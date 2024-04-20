@@ -5,7 +5,7 @@ import { Outlet, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
 import Header from '../../components/Header'
 import BarraLateral from '../../containers/BarraLateral'
-import { Container } from '../../styles'
+import { StyledContainerHome } from './styles'
 
 const Home = () => {
   // const { user } = useAppSelector((state) => state.auth)
@@ -21,10 +21,10 @@ const Home = () => {
   return (
     <>
       <Header />
-      <Container>
+      <StyledContainerHome>
         <BarraLateral />
         <Outlet />
-      </Container>
+      </StyledContainerHome>
     </>
   )
 }
