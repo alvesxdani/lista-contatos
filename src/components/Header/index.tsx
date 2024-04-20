@@ -14,7 +14,7 @@ const Header = () => {
 
   function handleLogout() {
     dispatch(logout())
-    navigate('/')
+    navigate('/login')
   }
   return (
     <StyledHeader>
