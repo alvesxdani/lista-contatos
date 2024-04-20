@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { useAppDispatch, useAppSelector } from '../../hooks/useApp'
-import { checkLoginStatus, logout } from '../../store/reducers/login'
+import React, { useEffect } from 'react'
+import { useAppDispatch } from '../../hooks/useApp'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
 import Header from '../../components/Header'
