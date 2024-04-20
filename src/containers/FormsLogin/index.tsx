@@ -8,7 +8,7 @@ import Subtitulo from '../../components/Subtitulo'
 import Input from '../../components/Input'
 import Button from '../../components/Botao'
 import { IAuthForm } from '../../Interfaces'
-import { authFormSchema } from '../../models/Form'
+import { authFormSchema } from '../../models/FormLogin'
 import { useAppDispatch, useAppSelector } from '../../hooks/useApp'
 import { login } from '../../store/reducers/login'
 import { useNavigate } from 'react-router-dom'
@@ -16,17 +16,15 @@ import { RootReducer } from '../../store'
 
 const FormsLogin = () => {
   const [loading, setLoading] = useState(false)
-  const [loggedIn, setLoggedIn] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const { user } = useAppSelector((state: RootReducer) => state.auth)
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-
   const errorMsg = 'Login inválido'
 
   useEffect(() => {
     if (Boolean(user)) {
-      navigate('/index')
+      navigate('/')
     }
   }, [user, navigate])
 
