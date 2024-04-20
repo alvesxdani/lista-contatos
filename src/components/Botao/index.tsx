@@ -9,7 +9,7 @@ const Button = ({ type, disabled=false, children, color, onClick }: TButtonProps
       onClick={onClick}
       disabled={disabled}
     >
-      {disabled === true ? 'Carregando...' : 'Entrar'}
+      {disabled === true ? 'Carregando...' : children}
     </StyledButton>
   );
 };
