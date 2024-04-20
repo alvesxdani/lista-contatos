@@ -1,17 +1,16 @@
 import React from 'react'
 import Logo from '../Logo'
 import { useAuth } from '../../hooks/useAuth'
-import { StyledHeader } from './styles';
-import Button from '../Botao';
-import { useAppDispatch } from '../../hooks/storeHook';
-import { logout } from '../../store/reducers/login';
-import { useNavigate } from 'react-router-dom';
+import { StyledHeader } from './styles'
+import Button from '../Botao'
+import { useAppDispatch } from '../../hooks/useApp'
+import { logout } from '../../store/reducers/login'
+import { useNavigate } from 'react-router-dom'
 
 const Header = () => {
-  const {user} = useAuth();
+  const { user } = useAuth()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-
 
   function handleLogout() {
     dispatch(logout())
@@ -30,7 +29,7 @@ const Header = () => {
         />
         {user?.email}
         <Button color="red" onClick={handleLogout}>
-          Logout
+          Sair
         </Button>
       </div>
     </StyledHeader>
