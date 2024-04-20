@@ -7,10 +7,10 @@ import { StyledFormsLogin } from './styles'
 import Subtitulo from '../../components/Subtitulo'
 import Input from '../../components/Input'
 import Button from '../../components/Botao'
-import { AuthState, IAuthForm } from '../../Interfaces'
+import { IAuthForm } from '../../Interfaces'
 import { authFormSchema } from '../../models/Form'
-import { useAppDispatch, useAppSelector } from '../../hooks/storeHook'
-import { isLogged, login } from '../../store/reducers/login'
+import { useAppDispatch, useAppSelector } from '../../hooks/useApp'
+import { login } from '../../store/reducers/login'
 import { useNavigate } from 'react-router-dom'
 import { RootReducer } from '../../store'
 
@@ -71,7 +71,7 @@ const FormsLogin = () => {
     }
   }
 
-return (
+  return (
     <StyledFormsLogin onSubmit={handleSubmit(handleFormSubmit)}>
       <Subtitulo text="Faça login" />
       <Input
