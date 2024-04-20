@@ -14,17 +14,19 @@ export const authSlice = createSlice({
       state.user = action.payload
       localStorage.setItem('user', JSON.stringify(action.payload))
     },
+    // Realizar logout do usuário
     logout: (state) => {
       state.user = null
       localStorage.removeItem('user')
     },
-    isLogged: (state) => {
-      state.user != null
-        ? localStorage.getItem('user')
-        : localStorage.removeItem('user')
+    // Checar se o usuário está logado
+    checkLoginStatus: (state) => {
+      // Verifica se há um usuário no localStorage e atualiza o estado
+      const user = JSON.parse(localStorage.getItem('user') || 'null')
+      state.user = user
     },
   },
 })
 
-export const { login, logout, isLogged } = authSlice.actions
+export const { login, logout, checkLoginStatus } = authSlice.actions
 export default authSlice.reducer
