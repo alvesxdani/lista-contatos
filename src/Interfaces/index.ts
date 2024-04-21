@@ -14,3 +14,9 @@ export interface IAuthForm {
   email: string
   password: string
 }
+
+export interface INewContactForm {
+  name: string
+  email: string
+  phone: string
+}
