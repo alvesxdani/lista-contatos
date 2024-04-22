@@ -12,6 +12,7 @@ import { addDoc, collection } from 'firebase/firestore'
 
 const NovoContato = () => {
   const [success, setSuccess] = useState('')
+  const [loading, setLoading] = useState(false)
   const {
     register,
     handleSubmit,
@@ -23,6 +24,7 @@ const NovoContato = () => {
 
   const handleFormSubmit = async (data: INewContactForm) => {
     try {
+      setLoading(true)
       const dataRef = await addDoc(collection(db, 'users'), {
         name: data.name,
         email: data.email,
@@ -39,6 +41,7 @@ const NovoContato = () => {
     }
     finally {
       setSuccess('Contato cadastrado com sucesso!')
+      setLoading(false)
     }
   }
 
@@ -63,7 +66,7 @@ const NovoContato = () => {
       />
       {errors.email && <p>{errors.email.message}</p>}
 
-      <Button color="black">Salvar</Button>
+      <Button color="black" disabled={loading}>Salvar</Button>
       {success && <p>{success}</p>}
     </StyledNovoContato>
   )
