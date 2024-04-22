@@ -7,5 +7,9 @@ export const StyledContainerHome = styled.div`
   justify-items: center;
   main {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
   }
 `
