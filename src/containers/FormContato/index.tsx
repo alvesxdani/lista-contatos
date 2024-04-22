@@ -17,6 +17,7 @@ import {
 } from 'firebase/firestore'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useFetchItens } from '../../hooks/useFetchItens'
+import Msg from '../../components/Msg'
 
 type TForm = {
   option: 'novo' | 'editar'
@@ -152,7 +153,7 @@ const FormContato = ({ option }: TForm) => {
           Cancelar
         </Button>
       )}
-      {success && <p>{success}</p>}
+      {success && <Msg type='success'>{success}</Msg>}
     </StyledNovoContato>
   )
 }
