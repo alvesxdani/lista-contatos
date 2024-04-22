@@ -22,7 +22,9 @@ const Home = () => {
       <Header />
       <StyledContainerHome>
         <BarraLateral />
-        <Outlet />
+        <main>
+          <Outlet />
+        </main>
       </StyledContainerHome>
     </>
   )
