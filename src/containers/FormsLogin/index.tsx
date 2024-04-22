@@ -71,6 +71,7 @@ const FormsLogin = () => {
   return (
     <StyledFormsLogin onSubmit={handleSubmit(handleFormSubmit)}>
       <Subtitulo text="Faça login" />
+      {error && <Msg type='error'>{error}</Msg>}
       <Input
         type="email"
         id="email"
@@ -90,7 +91,6 @@ const FormsLogin = () => {
       <Button color="red" type="submit" disabled={loading}>
         Entrar
       </Button>
-      {error && <Msg type='error'>{error}</Msg>}
     </StyledFormsLogin>
   )
 }
