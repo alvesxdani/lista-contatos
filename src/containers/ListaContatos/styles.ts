@@ -13,5 +13,10 @@ export const StyledListaContatos = styled.ul`
     padding: 1rem;
     margin-bottom: 2rem;
     border-radius: 0.5rem;
+    div {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
   }
 `
