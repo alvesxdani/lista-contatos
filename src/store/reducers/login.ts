@@ -1,7 +1,7 @@
-import { CaseReducer, PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { AuthState, IUser } from '../../Interfaces'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { IAuthState, IUser } from '../../Interfaces'
 
-const initialState: AuthState = {
+const initialState: IAuthState = {
   user: null,
 }
 
