@@ -5,4 +5,7 @@ export const StyledContainerHome = styled.div`
   display: grid;
   grid-template-columns: 0.7fr 3fr;
   justify-items: center;
+  main {
+    width: 100%;
+  }
 `
