@@ -3,38 +3,41 @@ import { DocumentData, collection, getDocs } from 'firebase/firestore'
 import { StyledListaContatos } from './styles'
 import Subtitulo from '../../components/Subtitulo'
 import { db } from '../../services/firebase'
+import Button from '../../components/Botao'
+import { useNavigate } from 'react-router-dom'
+import { Container } from '../../styles'
+import { useAppDispatch, useAppSelector } from '../../hooks/useApp'
+import { fetchItens } from '../../store/reducers/contatos'
+import { useFetchItens } from '../../hooks/useFetchItens'
 
 const ListaContatos = () => {
-  const [data, setData] = useState<any[]>()
+  const navigate = useNavigate()
+  const { items, fetchContatos } = useFetchItens()
 
-  const querySnapshot = async () => {
-    const snapshot = await getDocs(collection(db, 'users'))
-    return snapshot
+  useEffect(() => {
+    fetchContatos()
+  }, [])
+
+  function handleEdit() {
+    // Lógica para levar ao id dos dados
+    navigate('/editar-contato')
   }
-
-  querySnapshot()
-    .then((snapshot) => {
-      setData(snapshot.docs.map((doc) => doc.data()))
-    })
-    .catch((error) => {
-      console.log('Error getting documents', error)
-    })
-
   return (
-    <StyledListaContatos>
+    <Container>
       <Subtitulo text="Lista de contatos" />
-      <ul>
-        {data?.map((item,index) => {
+      <StyledListaContatos>
+        {items?.map(({id, data}, index) => {
           return (
-            <li key={index}>
-              <h2>{item.name}</h2>
-              <p>{item.phone}</p>
-              <p>{item.email}</p>
+            <li key={id}>
+              <h2>{data.name}</h2>
+              <p>{data.phone}</p>
+              <p>{data.email}</p>
+              <Button color="red" onClick={handleEdit}>Editar</Button>
             </li>
           )
         })}
-      </ul>
-    </StyledListaContatos>
+      </StyledListaContatos>
+    </Container>
   )
 }
 
