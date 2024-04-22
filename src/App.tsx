@@ -28,7 +28,7 @@ function App() {
           element: <NovoContato />,
         },
         {
-          path: '/editar-contato',
+          path: '/editar-contato/:id',
           element: <EditarContato />,
         },
       ],
