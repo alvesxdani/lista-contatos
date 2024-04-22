@@ -7,6 +7,7 @@ export const newContactSchema = yup.object().shape({
   email: yup
     .string()
     .email('Digite um e-mail válido.')
+    .lowercase()
     .required('E-mail obrigatório'),
   phone: yup
     .string()
