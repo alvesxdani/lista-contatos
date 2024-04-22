@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 
 import authReducer from './reducers/login'
+import contatosReducer from './reducers/contatos'
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
+    contatos: contatosReducer
   }
 })
 
