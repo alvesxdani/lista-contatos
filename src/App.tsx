@@ -7,7 +7,6 @@ import Login from './pages/Login'
 import Home from './pages/Home'
 import ListaContatos from './containers/ListaContatos'
 import FormContato from './containers/FormContato'
-import EditarContato from './containers/EditarContato'
 
 function App() {
   const router = createBrowserRouter([
