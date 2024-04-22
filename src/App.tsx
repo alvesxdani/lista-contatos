@@ -7,6 +7,7 @@ import Login from './pages/Login'
 import Home from './pages/Home'
 import ListaContatos from './containers/ListaContatos'
 import NovoContato from './containers/NovoContato'
+import EditarContato from './containers/EditarContato'
 
 function App() {
   const router = createBrowserRouter([
@@ -25,8 +26,12 @@ function App() {
         {
           path: '/novo-contato',
           element: <NovoContato />,
-        }
-      ]
+        },
+        {
+          path: '/editar-contato',
+          element: <EditarContato />,
+        },
+      ],
     },
   ])
   return (
