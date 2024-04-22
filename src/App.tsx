@@ -6,7 +6,7 @@ import store from './store'
 import Login from './pages/Login'
 import Home from './pages/Home'
 import ListaContatos from './containers/ListaContatos'
-import NovoContato from './containers/NovoContato'
+import FormContato from './containers/FormContato'
 import EditarContato from './containers/EditarContato'
 
 function App() {
@@ -25,11 +25,11 @@ function App() {
         },
         {
           path: '/novo-contato',
-          element: <NovoContato />,
+          element: <FormContato option="novo" />,
         },
         {
           path: '/editar-contato/:id',
-          element: <EditarContato />,
+          element: <FormContato option="editar" />,
         },
       ],
     },
