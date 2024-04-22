@@ -55,8 +55,6 @@ const FormsLogin = () => {
             photoURL: userLogin.photoURL || null,
           }),
         )
-      console.log(userLogin)
-      // console.log(user)
     } catch (e: any) {
       setError(errorMsg)
       setLoading(false)
