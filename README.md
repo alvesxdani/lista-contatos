@@ -47,10 +47,6 @@ Esta é uma aplicação de agenda virtual construída com tecnologias modernas, 
 - **YUP:** Uma biblioteca de validação de esquema JavaScript.
 - **Firebase (auth e firestore):** Uma plataforma de desenvolvimento de aplicativos móveis e web.
 
-## Contribuição
-
-Contribuições são bem-vindas! Sinta-se à vontade para abrir um problema ou enviar uma solicitação de pull request.
-
 ## Licença
 
 Este projeto está licenciado sob a [Licença MIT](https://opensource.org/licenses/MIT).
