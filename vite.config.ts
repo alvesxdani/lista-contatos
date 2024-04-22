@@ -3,7 +3,8 @@ import type { UserConfig } from 'vite'
 
 const config: UserConfig = {
   jsx: 'react',
-  plugins: [reactPlugin]
+  plugins: [reactPlugin],
+  base: '/lista-contatos/'
 }
 
 export default config
