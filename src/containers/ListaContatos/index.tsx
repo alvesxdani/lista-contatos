@@ -1,4 +1,4 @@
-import React, { SetStateAction, useEffect, useState } from 'react'
+import React, { MouseEventHandler, SetStateAction, useEffect, useState } from 'react'
 import { DocumentData, collection, getDocs } from 'firebase/firestore'
 import { StyledListaContatos } from './styles'
 import Subtitulo from '../../components/Subtitulo'
@@ -18,9 +18,9 @@ const ListaContatos = () => {
     fetchContatos()
   }, [])
 
-  function handleEdit() {
+  function handleEdit(id: string) {
     // Lógica para levar ao id dos dados
-    navigate('/editar-contato')
+    navigate(`/editar-contato/${id}`)
   }
   return (
     <Container>
@@ -32,7 +32,7 @@ const ListaContatos = () => {
               <h2>{data.name}</h2>
               <p>{data.phone}</p>
               <p>{data.email}</p>
-              <Button color="red" onClick={handleEdit}>Editar</Button>
+              <Button color="red" onClick={() => handleEdit(id)}>Editar</Button>
             </li>
           )
         })}
