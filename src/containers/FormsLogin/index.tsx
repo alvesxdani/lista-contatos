@@ -1,4 +1,4 @@
-import React, { ErrorInfo, SetStateAction, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import { signInWithEmailAndPassword } from 'firebase/auth'
@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/useApp'
 import { login } from '../../store/reducers/login'
 import { useNavigate } from 'react-router-dom'
 import { RootReducer } from '../../store'
+import Msg from '../../components/Msg'
 
 const FormsLogin = () => {
   const [loading, setLoading] = useState(false)
@@ -89,7 +90,7 @@ const FormsLogin = () => {
       <Button color="red" type="submit" disabled={loading}>
         Entrar
       </Button>
-      {error && <p>{error}</p>}
+      {error && <Msg type='error'>{error}</Msg>}
     </StyledFormsLogin>
   )
 }
