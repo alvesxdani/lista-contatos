@@ -25,4 +25,7 @@ export const StyledBarraLateral = styled.div`
       }
     }
   }
+  @media (max-width: 40rem) {
+    height: auto;
+  }
 `
