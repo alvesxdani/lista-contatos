@@ -21,7 +21,7 @@ export default defineConfig({
     AutoImport({
       viteOptimizeDeps: true,
       dirs: ['@/containers', '@/components', '@/utils', '@/store', '@/hooks'],
-      dts: '@/auto-imports.d.ts',
+      dts: './src/auto-imports.d.ts',
     }),
   ],
   server: {
