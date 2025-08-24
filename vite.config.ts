@@ -1,6 +1,7 @@
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
+import AutoImport from 'unplugin-auto-import/vite'
 import { fileURLToPath } from 'url'
 import { defineConfig } from 'vite'
 
@@ -14,11 +15,16 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src'),
     },
   },
-  plugins: [react(), tailwindcss()],
+  plugins: [
+    react(),
+    tailwindcss(),
+    AutoImport({
+      viteOptimizeDeps: true,
+      dirs: ['@/containers', '@/components', '@/utils', '@/store', '@/hooks'],
+      dts: '@/auto-imports.d.ts',
+    }),
+  ],
   server: {
     port: 3000,
-  },
-  esbuild: {
-    jsxInject: `import React from 'react'`,
   },
 })
