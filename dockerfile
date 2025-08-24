@@ -1,6 +1,6 @@
 # Usa uma imagem base oficial com o Node.js.
 # Escolha a versão que sua aplicação precisa.
-FROM node:18-alpine
+FROM node:20-alpine
 
 # Define o diretório de trabalho dentro do container.
 WORKDIR /app
