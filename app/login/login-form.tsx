@@ -38,7 +38,6 @@ export function LoginForm() {
         return
       }
 
-      localStorage.setItem('auth-token', data.token)
       window.location.href = '/'
     } catch {
       setError('Erro de conexão. Tente novamente.')

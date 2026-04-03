@@ -16,14 +16,23 @@ export async function POST(request: NextRequest) {
     const userCredential = await signInWithEmailAndPassword(auth, email, password)
     const token = await userCredential.user.getIdToken()
 
-    return NextResponse.json({
-      token,
+    const response = NextResponse.json({
       user: {
         uid: userCredential.user.uid,
         email: userCredential.user.email,
         displayName: userCredential.user.displayName,
       },
     })
+
+    response.cookies.set('auth-token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7,
+    })
+
+    return response
   } catch (error: unknown) {
     const firebaseErrorMap: Record<string, string> = {
       'auth/user-not-found': 'Usuário não encontrado.',
