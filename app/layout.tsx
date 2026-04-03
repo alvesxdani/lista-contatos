@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { IBM_Plex_Mono, Noto_Serif, Open_Sans } from 'next/font/google'
-import './assets/style/globals.scss'
+import '../assets/style/globals.scss'
 
 const openSans = Open_Sans({
   variable: '--font-sans',
