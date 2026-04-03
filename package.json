@@ -1,0 +1,30 @@
+{
+  "name": "lista-contatos",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@radix-ui/react-slot": "^1.2.4",
+    "@tailwindcss/postcss": "^4.2.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.7.0",
+    "next": "16.2.2",
+    "postcss": "^8.5.8",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "sass": "^1.99.0",
+    "tailwind-merge": "^3.5.0",
+    "tailwindcss": "^4.2.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "typescript": "^5"
+  }
+}
