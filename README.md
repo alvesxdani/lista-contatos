@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Lista de Contatos
 
-## Getting Started
+Aplicacao web para gerenciamento de contatos pessoais, com autenticacao de usuarios e operacoes CRUD completas.
 
-First, run the development server:
+## Tecnologias
+
+- **Next.js 16** (App Router) — framework React fullstack
+- **React 19** — interface de usuario
+- **TypeScript** — tipagem estatica
+- **Firebase** — autenticacao (Auth) e banco de dados (Firestore)
+- **Tailwind CSS 4** — estilizacao
+- **Radix UI** — componentes acessiveis (Dialog, Table, Button, etc.)
+- **Lucide React** — icones
+
+## Funcionalidades
+
+- Registro e login de usuarios com email/senha
+- Rotas protegidas com verificacao de autenticacao via cookies
+- Listagem de contatos do usuario autenticado
+- Criacao, edicao e exclusao de contatos (nome, email, telefone)
+- Busca/filtragem de contatos em tempo real
+- Confirmacao antes de excluir um contato
+
+## Estrutura do Projeto
+
+```
+app/
+  login/              # Pagina e formulario de login
+  register/           # Pagina e formulario de registro
+  (protected)/        # Rotas protegidas (requerem autenticacao)
+    page.tsx          # Pagina principal — lista de contatos
+    contact-list.tsx  # Componente da lista de contatos
+    layout.tsx        # Layout com verificacao de auth e header
+  api/
+    auth/
+      login/          # POST — login com Firebase Auth
+      register/       # POST — registro de novo usuario
+      logout/         # Logout (limpa cookies)
+    contacts/
+      route.ts        # GET (listar) e POST (criar) contatos
+      [id]/route.ts   # PUT (editar) e DELETE (excluir) contato
+    services/
+      firebase.ts     # Configuracao do Firebase (Auth + Firestore)
+components/
+  header.tsx          # Header com nome do usuario
+  ui/                 # Componentes reutilizaveis (Button, Input, Dialog, Table, etc.)
+```
+
+## Pre-requisitos
+
+- Node.js 18+
+- Projeto Firebase com Authentication e Firestore habilitados
+
+## Configuracao
+
+1. Clone o repositorio:
+
+```bash
+git clone https://github.com/alvesxdani/lista-contatos
+cd lista-contatos
+```
+
+2. Instale as dependencias:
+
+```bash
+npm install
+```
+
+3. Crie um arquivo `.env` na raiz do projeto com as credenciais do Firebase.
+
+4. Inicie o servidor de desenvolvimento:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+5. Acesse [http://localhost:3000](http://localhost:3000) no navegador.
