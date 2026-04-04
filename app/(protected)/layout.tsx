@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+import { Header } from '@/components/header'
 
 export default async function ProtectedLayout({
   children,
@@ -13,5 +14,12 @@ export default async function ProtectedLayout({
     redirect('/login')
   }
 
-  return <>{children}</>
+  const userName = cookieStore.get('user-name')?.value || ''
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Header userName={decodeURIComponent(userName)} />
+      <main className="mx-auto max-w-4xl px-6 py-8">{children}</main>
+    </div>
+  )
 }

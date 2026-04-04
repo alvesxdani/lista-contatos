@@ -1,3 +1,5 @@
+import { ContactList } from './contact-list'
+
 export default function Home() {
-  return <p>olá mundo</p>
+  return <ContactList />
 }
