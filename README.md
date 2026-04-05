@@ -9,8 +9,9 @@ Aplicacao web para gerenciamento de contatos pessoais, com autenticacao de usuar
 - **TypeScript** — tipagem estatica
 - **Firebase** — autenticacao (Auth) e banco de dados (Firestore)
 - **Tailwind CSS 4** — estilizacao
-- **Radix UI** — componentes acessiveis (Dialog, Table, Button, etc.)
+- **Shadcn UI** — componentes acessiveis (Dialog, Table, Button, etc.)
 - **Lucide React** — icones
+- **YUP** - Validações dos formulários
 
 ## Funcionalidades
 
