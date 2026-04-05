@@ -2,6 +2,8 @@
 
 import { useState, type FormEvent } from 'react'
 import Link from 'next/link'
+import { ValidationError } from 'yup'
+import { loginSchema } from '@/lib/validations'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -16,12 +18,28 @@ import {
 export function LoginForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [errors, setErrors] = useState<Record<string, string>>({})
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
     setError('')
+    setErrors({})
+
+    try {
+      await loginSchema.validate({ email, password }, { abortEarly: false })
+    } catch (err) {
+      if (err instanceof ValidationError) {
+        const fieldErrors: Record<string, string> = {}
+        err.inner.forEach((e) => {
+          if (e.path) fieldErrors[e.path] = e.message
+        })
+        setErrors(fieldErrors)
+        return
+      }
+    }
+
     setLoading(true)
 
     try {
@@ -53,7 +71,7 @@ export function LoginForm() {
         <CardDescription>Faça login para acessar seus contatos</CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4" noValidate>
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <Input
@@ -62,8 +80,10 @@ export function LoginForm() {
               placeholder="seu@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
             />
+            {errors.email && (
+              <p className="text-sm text-destructive">{errors.email}</p>
+            )}
           </div>
           <div className="space-y-2">
             <Label htmlFor="password">Senha</Label>
@@ -73,8 +93,10 @@ export function LoginForm() {
               placeholder="Sua senha"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              required
             />
+            {errors.password && (
+              <p className="text-sm text-destructive">{errors.password}</p>
+            )}
           </div>
           {error && (
             <p className="text-sm text-destructive">{error}</p>

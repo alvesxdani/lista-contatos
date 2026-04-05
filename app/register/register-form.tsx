@@ -2,6 +2,8 @@
 
 import { useState, type FormEvent } from 'react'
 import Link from 'next/link'
+import { ValidationError } from 'yup'
+import { registerSchema } from '@/lib/validations'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -18,16 +20,29 @@ export function RegisterForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [errors, setErrors] = useState<Record<string, string>>({})
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
     setError('')
+    setErrors({})
 
-    if (password !== confirmPassword) {
-      setError('As senhas não coincidem.')
-      return
+    try {
+      await registerSchema.validate(
+        { name, email, password, confirmPassword },
+        { abortEarly: false },
+      )
+    } catch (err) {
+      if (err instanceof ValidationError) {
+        const fieldErrors: Record<string, string> = {}
+        err.inner.forEach((e) => {
+          if (e.path) fieldErrors[e.path] = e.message
+        })
+        setErrors(fieldErrors)
+        return
+      }
     }
 
     setLoading(true)
@@ -61,7 +76,7 @@ export function RegisterForm() {
         <CardDescription>Preencha os dados para se registrar</CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4" noValidate>
           <div className="space-y-2">
             <Label htmlFor="name">Nome</Label>
             <Input
@@ -80,8 +95,10 @@ export function RegisterForm() {
               placeholder="seu@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
             />
+            {errors.email && (
+              <p className="text-sm text-destructive">{errors.email}</p>
+            )}
           </div>
           <div className="space-y-2">
             <Label htmlFor="password">Senha</Label>
@@ -91,9 +108,10 @@ export function RegisterForm() {
               placeholder="Mínimo 6 caracteres"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              required
-              minLength={6}
             />
+            {errors.password && (
+              <p className="text-sm text-destructive">{errors.password}</p>
+            )}
           </div>
           <div className="space-y-2">
             <Label htmlFor="confirmPassword">Confirmar Senha</Label>
@@ -103,9 +121,10 @@ export function RegisterForm() {
               placeholder="Repita a senha"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-              minLength={6}
             />
+            {errors.confirmPassword && (
+              <p className="text-sm text-destructive">{errors.confirmPassword}</p>
+            )}
           </div>
           {error && (
             <p className="text-sm text-destructive">{error}</p>

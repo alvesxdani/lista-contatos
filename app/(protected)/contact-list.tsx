@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useEffect, type FormEvent } from 'react'
+import { ValidationError } from 'yup'
+import { contactSchema, formatPhone } from '@/lib/validations'
 import { Pencil, Trash2, Plus, Search } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -36,6 +38,7 @@ export function ContactList() {
   const [formName, setFormName] = useState('')
   const [formEmail, setFormEmail] = useState('')
   const [formPhone, setFormPhone] = useState('')
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({})
   const [formError, setFormError] = useState('')
   const [saving, setSaving] = useState(false)
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null)
@@ -64,6 +67,7 @@ export function ContactList() {
     setFormEmail('')
     setFormPhone('')
     setFormError('')
+    setFormErrors({})
     setDialogOpen(true)
   }
 
@@ -73,12 +77,35 @@ export function ContactList() {
     setFormEmail(contact.email)
     setFormPhone(contact.phone)
     setFormError('')
+    setFormErrors({})
     setDialogOpen(true)
+  }
+
+  function handlePhoneChange(value: string) {
+    setFormPhone(formatPhone(value))
   }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
     setFormError('')
+    setFormErrors({})
+
+    try {
+      await contactSchema.validate(
+        { name: formName, email: formEmail, phone: formPhone },
+        { abortEarly: false },
+      )
+    } catch (err) {
+      if (err instanceof ValidationError) {
+        const fieldErrors: Record<string, string> = {}
+        err.inner.forEach((e) => {
+          if (e.path) fieldErrors[e.path] = e.message
+        })
+        setFormErrors(fieldErrors)
+        return
+      }
+    }
+
     setSaving(true)
 
     try {
@@ -254,7 +281,7 @@ export function ContactList() {
               {editing ? 'Editar Contato' : 'Novo Contato'}
             </DialogTitle>
           </DialogHeader>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4" noValidate>
             <div className="space-y-2">
               <Label htmlFor="contact-name">Nome *</Label>
               <Input
@@ -262,8 +289,10 @@ export function ContactList() {
                 value={formName}
                 onChange={(e) => setFormName(e.target.value)}
                 placeholder="Nome do contato"
-                required
               />
+              {formErrors.name && (
+                <p className="text-sm text-destructive">{formErrors.name}</p>
+              )}
             </div>
             <div className="space-y-2">
               <Label htmlFor="contact-email">Email</Label>
@@ -274,15 +303,21 @@ export function ContactList() {
                 onChange={(e) => setFormEmail(e.target.value)}
                 placeholder="email@exemplo.com"
               />
+              {formErrors.email && (
+                <p className="text-sm text-destructive">{formErrors.email}</p>
+              )}
             </div>
             <div className="space-y-2">
               <Label htmlFor="contact-phone">Telefone</Label>
               <Input
                 id="contact-phone"
                 value={formPhone}
-                onChange={(e) => setFormPhone(e.target.value)}
+                onChange={(e) => handlePhoneChange(e.target.value)}
                 placeholder="(00) 00000-0000"
               />
+              {formErrors.phone && (
+                <p className="text-sm text-destructive">{formErrors.phone}</p>
+              )}
             </div>
             {formError && (
               <p className="text-sm text-destructive">{formError}</p>
